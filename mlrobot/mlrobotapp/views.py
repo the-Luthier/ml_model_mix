@@ -9,7 +9,7 @@ from .models import tfMask_CRNN
 
 
 @csrf_exempt
-def inference(request):
+def inference_tfMask_CRNN(request):
     if request.method == 'POST':
         # Load the incoming image
         image = cv2.imdecode(request.FILES['image'].read(), cv2.IMREAD_COLOR)
