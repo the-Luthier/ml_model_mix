@@ -5,16 +5,14 @@ from django.shortcuts import render
 import cv2
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from models import tfMask_CRNN, SSDResNetModel
+from models import tfMask_CRNN
+from models import SSDResNetModel
 from dataset import CustomDataset
 from torchvision.transforms import ToTensor
 
 
 class Mask_CRNNview:
     @csrf_exempt
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
-
     def post(self, request):
         # Load the incoming image
         image = cv2.imdecode(request.FILES['image'].read(), cv2.IMREAD_COLOR)
@@ -86,13 +84,6 @@ class SSDResNetView:
 
         # Example code for processing predictions
         for box, label, score in zip(predictions['boxes'], predictions['labels'], predictions['scores']):
-            box_data = {
-              'x_min': box[0].item(),
-              'y_min': box[1].item(),
-              'x_max': box[2].item(),
-              'y_max': box[3].item(),
-            }
-            
             result = {
                 'box': box.tolist(),
                 'label': label.item(),
