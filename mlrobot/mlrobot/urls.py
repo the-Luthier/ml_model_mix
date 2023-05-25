@@ -16,7 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from mlrobotapp import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path('tfMask_CRNN/', views.Mask_CRNNview.as_view(), name='tfMask_CRNN'),
+    path('SSDResNet/', views.SSDResNetView.as_view(), name='detect_objects'),
 ]
