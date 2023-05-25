@@ -4,6 +4,7 @@ from django.db import models
 
 import tensorflow as tf
 from keras import layers
+from ssd_resnet import SSDResNet
 
 
 class tfMask_CRNN(tf.keras.Model):
@@ -35,3 +36,18 @@ class tfMask_CRNN(tf.keras.Model):
         x = self.fc1(x)
         x = self.fc2(x)
         return x
+    
+
+
+class SSDResNetModel:
+    def __init__(self, num_classes):
+        self.num_classes = num_classes
+        self.model = None
+
+    def build_model(self):
+        model = SSDResNet(self.num_classes)
+        model.build_model()
+        self.model = model.get_model()
+
+    def get_model(self):
+        return self.model
