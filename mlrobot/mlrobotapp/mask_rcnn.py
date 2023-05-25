@@ -1,4 +1,7 @@
-class CustomConfig(Config):
+import configparser
+
+
+class CustomConfig(configparser):
     # Customize the necessary configuration parameters
     NAME = "custom_config"
     IMAGES_PER_GPU = 1
