@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: netg
+  name: mlrobot
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: netg
+      app: mlrobot
   template:
     metadata:
       labels:
-        app: mobile-app
+        app: mlrobotapp
     spec:
       containers:
-      - name: netg
+      - name: mlrobot
         image: onurkaroff/netgrepo:latest
         imagePullPolicy: Always
         resources:
