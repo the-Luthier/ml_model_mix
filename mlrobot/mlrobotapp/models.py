@@ -6,6 +6,7 @@ import tensorflow as tf
 from keras import layers
 from ssd_resnet import SSDResNet, ssdlite320_mobilenet_v3_large
 import torch
+import torch.nn as nn
 
 
 class tfMask_CRNN(tf.keras.Model):
@@ -50,10 +51,8 @@ class SSDResNetModel:
         # Load the pre-trained SSD ResNet-152 model
         self.model = ssdlite320_mobilenet_v3_large(pretrained=True)
 
-        # Replace the classification head with a new one suitable for the custom number of classes
-        num_inputs = self.model.classification[-1].in_features
-        self.model.classification[-1] = torch.nn.Linear(num_inputs, self.num_classes + 1)
-
+        num_inputs = self.model.parameters.size()[0]
+        self.model.classification = torch.nn.Linear(num_inputs, self.num_classes + 1)
         # Move the model to the device (GPU if available)
         self.model = self.model.to(self.device)
 

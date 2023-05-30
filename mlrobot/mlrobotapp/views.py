@@ -10,7 +10,7 @@ from models import SSDResNetModel
 from mask_rcnn import CustomDataset
 import torch
 from torchvision.transforms import ToTensor 
-
+from ssd_resnet import SSDResNet
 
 class Mask_CRNNview:
     @csrf_exempt
@@ -89,7 +89,7 @@ class SSDResNetView:
         # Example code for processing predictions
         for box, label, score in zip(predictions['boxes'], predictions['labels'], predictions['scores']):
             result = {
-                'box': box.tolist(),
+                'box': box.item(),
                 'label': label.item(),
                 'score': score.item(),
             }
