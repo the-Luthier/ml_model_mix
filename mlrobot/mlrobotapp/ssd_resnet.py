@@ -3,7 +3,6 @@ import torchvision
 from torchvision.models.detection import ssdlite320_mobilenet_v3_large
 from torch.utils.data import DataLoader
 
-
 class SSDResNet:
     def __init__(self, num_classes):
         self.num_classes = num_classes
@@ -16,7 +15,7 @@ class SSDResNet:
 
         # Replace the classification head with a new one suitable for the custom number of classes
         num_inputs = self.model.head.classifier[-1].in_features
-        self.model.head.classifier[-1] = torch.nn.Linear(num_inputs, self.num_classes + 1)
+        self.model.head.classifier = torch.nn.Linear(num_inputs, self.num_classes + 1)
 
         # Move the model to the device (GPU if available)
         self.model = self.model.to(self.device)
