@@ -124,7 +124,7 @@ class ObjectDetectionView(APIView):
         """
         image = request.FILES['image']
         model = SSDResNetModel(num_classes=1000)
-        device = model.get_device()
+        device = model.build_model()
         model = model.get_model(device)
         inputs = torch.from_numpy(np.array(image)).float()
         inputs = inputs.unsqueeze(0)
