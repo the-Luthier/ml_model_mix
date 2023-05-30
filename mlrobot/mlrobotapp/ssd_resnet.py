@@ -14,8 +14,8 @@ class SSDResNet:
         self.model = ssdlite320_mobilenet_v3_large(pretrained=True)
 
         # Replace the classification head with a new one suitable for the custom number of classes
-        num_inputs = self.model.head.classifier[-1].in_features
-        self.model.head.classifier = torch.nn.Linear(num_inputs, self.num_classes + 1)
+        num_inputs = classifier[-1].in_features
+        classifier = torch.nn.Linear(num_inputs, self.num_classes + 1)
 
         # Move the model to the device (GPU if available)
         self.model = self.model.to(self.device)
