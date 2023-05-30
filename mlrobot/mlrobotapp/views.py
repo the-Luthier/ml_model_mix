@@ -8,6 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 from models import tfMask_CRNN
 from models import SSDResNetModel
 from dataset import CustomDataset
+import torch
 from torchvision.transforms import ToTensor
 
 
@@ -70,11 +71,14 @@ class SSDResNetView:
         # Make predictions on the image
         self.model.get_model().eval()
         with torch.no_grad():
-            predictions = self.model.get_model()(image)
+            predictions = self.new_method(image)
 
         # Process the predictions and return the results
         detection_results = self.process_predictions(predictions)
         return detection_results
+
+    def new_method(self, image):
+        return self.model.get_model()
 
     def process_predictions(self, predictions):
         # Process the model predictions to extract relevant information
