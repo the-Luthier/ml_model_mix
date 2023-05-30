@@ -28,7 +28,7 @@ class CustomConfig(Config):
         # Set default values
         self.BACKBONE = "resnet50"
         self.IMAGE_MIN_DIM = 512
-        self.IMAGE_MAX_DIM = 512
+        self.IMAGE_MAX_DIM = 1024
         # Add other default parameters here
 
     def save(self, filepath):
