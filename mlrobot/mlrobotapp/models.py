@@ -4,7 +4,8 @@ from django.db import models
 
 import tensorflow as tf
 from keras import layers
-from ssd_resnet import SSDResNet
+from ssd_resnet import SSDResNet, ssdlite320_mobilenet_v3_large
+import torch
 
 
 class tfMask_CRNN(tf.keras.Model):
