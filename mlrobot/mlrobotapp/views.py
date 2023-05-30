@@ -5,12 +5,14 @@ from django.shortcuts import render
 import cv2
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework.views import APIView
 from models import tfMask_CRNN
 from models import SSDResNetModel
 from mask_rcnn import CustomDataset
 import torch
 from torchvision.transforms import ToTensor 
 from ssd_resnet import SSDResNet
+import numpy as np
 
 class Mask_CRNNview:
     @csrf_exempt
@@ -69,7 +71,7 @@ class SSDResNetView:
         image = image.unsqueeze(0)
 
         # Make predictions on the image
-        self.model.get_model().eval()
+        self.model.get_model()
         with torch.no_grad():
             predictions = self.new_method(image)
 
@@ -96,3 +98,37 @@ class SSDResNetView:
             results.append(result)
 
         return results
+
+
+
+class ObjectDetectionView(APIView):
+    """
+    Detect objects in images.
+
+    Args:
+        request: The HTTP request object.
+
+    Returns:
+        A JSON response containing the predicted classes.
+    """
+
+    def detect_objects(self, request):
+        """
+        Detect objects in the given image.
+
+        Args:
+            request: The HTTP request object.
+
+        Returns:
+            The predicted classes as a list.
+        """
+        image = request.FILES['image']
+        model = SSDResNetModel(num_classes=1000)
+        device = model.get_device()
+        model = model.get_model(device)
+        inputs = torch.from_numpy(np.array(image)).float()
+        inputs = inputs.unsqueeze(0)
+        predictions = model(inputs)
+        predictions = predictions.cpu().numpy()
+        objects = np.argmax(predictions, axis=1)
+        return JsonResponse({'objects': objects})

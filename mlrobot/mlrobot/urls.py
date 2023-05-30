@@ -20,6 +20,7 @@ from mlrobotapp import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('tfMask_CRNN/', views.Mask_CRNNview.as_view(), name='tfMask_CRNN'),
-    path('SSDResNet/', views.SSDResNetView.as_view(), name='detect_objects'),
+    path("tfMask_CRNN/", views.Mask_CRNNview.as_view(), name='tfMask_CRNN'),
+    path("SSDResNetView/", views.SSDResNetView.as_view(), name='detect_objects'),
+    path("ObjectDetectionView/", views.ObjectDetectionView.as_view(), name='Object_Detection'),
 ]
