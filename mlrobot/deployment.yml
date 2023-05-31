@@ -10,7 +10,7 @@ spec:
     matchLabels:
       app: mlrobot
   template:
-    metadata:
+    metadata:                                  # Last updated one ....
       labels:
         app: mlrobotapp
     spec:
