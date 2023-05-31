@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mlrobot
+  annotations:
+    container.apparmor.security.beta.kubernetes.io/mlrobot: runtime/default
 spec:
   replicas: 3
   selector:
